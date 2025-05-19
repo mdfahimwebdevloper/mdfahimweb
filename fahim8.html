@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Muhammed Fahim - Professional Web Developer & Software Engineer Portfolio">
+    <meta name="keywords" content="Muhammed Fahim, web developer, software engineer, portfolio, Bogura">
+    <meta name="author" content="Muhammed Fahim">
+    <title>Muhammed Fahim - Developer Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Import premium fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;700;900&display=swap');
+
+        /* Global styles */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto Slab', serif;
+            line-height: 1.9;
+            color: #f3f4f6;
+            background-color: #0a0e1a;
+            overflow-x: hidden;
+        }
+
+        /* Container for main content */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Navigation bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            padding: 20px 0;
+            transition: background 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 14, 26, 1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #a855f7;
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 32px;
+        }
+
+        nav ul li a {
+            color: #f3f4f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: #a855f7;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            color: #f3f4f6;
+            cursor: pointer;
+        }
+
+        /* Header section */
+        header {
+            position: relative;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e1b4b, #0a0e1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://scontent.fzyl2-2.fna.fbcdn.net/v/t39.30808-6/495024644_122102935910864287_2841173267382383899_n.jpg?stp=c0.104.964.964a_dst-jpg_s964x964_tt6&_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Bm3ZqP-89RAQ7kNvwFG5SJ0&_nc_oc=AdlI1L6BXSB3ttlAjXZeRoZpXY729DE6SzzsHrUpCmRg00vYqDxgmXBTuC1cPBCaQKw&_nc_zt=23&_nc_ht=scontent.fzyl2-2.fna&_nc_gid=LQjMqcPWcRh6VRN23DjX2Q&oh=00_AfKatdQmzF6ErflFQ-omQ3UuKdPUQzZVN0UNHVXcR76SOw&oe=682C6464') center/cover no-repeat;
+            filter: blur(15px) brightness(0.2);
+            z-index: 1;
+        }
+
+        header .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        header .profile-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 10px solid #a855f7;
+            margin-bottom: 40px;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            loading: lazy;
+        }
+
+        header .profile-img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
+        }
+
+        header h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: #a855f7;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        header #typed-text {
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: #d1d5db;
+            min-height: 2.4rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main content */
+        main {
+            background: #141b2d;
+            border-radius: 24px;
+            padding: 80px;
+            margin: 80px 0;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Section styles */
+        section {
+            margin-bottom: 80px;
+        }
+
+        section h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #a855f7;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 100px;
+            height: 6px;
+            background: linear-gradient(90deg, #a855f7, transparent);
+            border-radius: 3px;
+        }
+
+        /* Personal info section */
+        .personal-info ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .personal-info li {
+            font-size: 1.3rem;
+            padding: 28px;
+            background: #1f263e;
+            border-radius: 20px;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            border: 2px solid transparent;
+        }
+
+        .personal-info li:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 12px 32px rgba(168, 85, 247, 0.4);
+            border-color: #a855f7;
+        }
+
+        .personal-info li strong {
+            color: #a855f7;
+        }
+
+        /* Skills section */
+        .skills ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .skills li {
+            font-size: 1.2rem;
+            padding: 14px 32px;
+            background: #a855f7;
+            color: #0a0e1a;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: background 0.5s ease, transform 0.5s ease;
+        }
+
+        .skills li:hover {
+            background: #d8b4fe;
+            transform: translateY(-8px);
+        }
+
+        /* Projects section */
+        .projects .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            background: #1f263e;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 12px 32px rgba(168, 85, 247, 0.4);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            loading: lazy;
+        }
+
+        .project-card .project-info {
+            padding: 24px;
+        }
+
+        .project-card h3 {
+            font-size: 1.6rem;
+            color: #a855f7;
+            margin-bottom: 16px;
+        }
+
+        .project-card p {
+            font-size: 1.1rem;
+            color: #d1d5db;
+            margin-bottom: 20px;
+        }
+
+        .project-card a {
+            display: inline-block;
+            padding: 10px 24px;
+            background: #a855f7;
+            color: #0a0e1a;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .project-card a:hover {
+            background: #d8b4fe;
+        }
+
+        /* Contact section */
+        .contact {
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .contact a, .contact button {
+            display: inline-block;
+            padding: 18px 48px;
+            background: #a855f7;
+            color: #0a0e1a;
+            text-decoration: none;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            margin: 16px;
+            cursor: pointer;
+            transition: background 0.5s ease, transform 0.5s ease;
+        }
+
+        .contact a:hover, .contact button:hover {
+            background: #d8b4fe;
+            transform: translateY(-8px);
+        }
+
+        /* Contact modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #1f263e;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-content .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: #f3f4f6;
+            cursor: pointer;
+        }
+
+        .modal-content h2 {
+            font-size: 2rem;
+            color: #a855f7;
+            margin-bottom: 24px;
+        }
+
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-content input, .modal-content textarea {
+            padding: 14px;
+            background: #0a0e1a;
+            border: 2px solid #a855f7;
+            border-radius: 8px;
+            color: #f3f4f6;
+            font-size: 1.1rem;
+        }
+
+        .modal-content button {
+            padding: 14px;
+            background: #a855f7;
+            color: #0a0e1a;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .modal-content button:hover {
+            background: #d8b4fe;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            padding: 12px 16px;
+            background: #a855f7;
+            color: #0a0e1a;
+            border-radius: 50%;
+            font-size: 1.4rem;
+            text-decoration: none;
+            display: none;
+            transition: background 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            background: #d8b4fe;
+        }
+
+        /* Footer */
+        footer {
+            background: #070b14;
+            padding: 64px 0;
+            text-align: center;
+            border-top: 2px solid #1f263e;
+        }
+
+        footer .social-links {
+            margin-bottom: 32px;
+        }
+
+        footer .social-links a {
+            margin: 0 24px;
+            color: #a855f7;
+            font-size: 1.8rem;
+            text-decoration: none;
+            transition: color 0.5s ease;
+        }
+
+        footer .social-links a:hover {
+            color: #d8b4fe;
+        }
+
+        footer p {
+            font-size: 1.1rem;
+            color: #d1d5db;
+            font-weight: 300;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            header {
+                min-height: 80vh;
+            }
+
+            header h1 {
+                font-size: 3.5rem;
+            }
+
+            main {
+                padding: 64px 32px;
+            }
+
+            section h2 {
+                font-size: 2.3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: #0a0e1a;
+                padding: 20px;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            header {
+                min-height: 70vh;
+            }
+
+            header h1 {
+                font-size: 2.8rem;
+            }
+
+            header .profile-img {
+                width: 200px;
+                height: 200px;
+            }
+
+            .personal-info ul {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                padding: 48px 24px;
+            }
+
+            .project-card img {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            header #typed-text {
+                font-size: 1.3rem;
+            }
+
+            header .profile-img {
+                width: 160px;
+                height: 160px;
+            }
+
+            .personal-info li,
+            .about p {
+                font-size: 1.1rem;
+            }
+
+            .skills li {
+                font-size: 1rem;
+                padding: 12px 28px;
+            }
+
+            .contact a, .contact button {
+                padding: 14px 36px;
+                margin: 12px 0;
+                display: block;
+            }
+
+            .modal-content {
+                padding: 24px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="#home" class="logo">Muhammed Fahim</a>
+            <span class="hamburger" aria-label="Toggle navigation">☰</span>
+            <ul>
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <header id="home">
+        <div class="header-content">
+            <a href="https://www.facebook.com/profile.php?id=61575928630091" target="_blank" aria-label="Visit Muhammed Fahim's Facebook profile">
+                <img src="https://scontent.fzyl2-2.fna.fbcdn.net/v/t39.30808-6/495024644_122102935910864287_2841173267382383899_n.jpg?stp=c0.104.964.964a_dst-jpg_s964x964_tt6&_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Bm3ZqP-89RAQ7kNvwFG5SJ0&_nc_oc=AdlI1L6BXSB3ttlAjXZeRoZpXY729DE6SzzsHrUpCmRg00vYqDxgmXBTuC1cPBCaQKw&_nc_zt=23&_nc_ht=scontent.fzyl2-2.fna&_nc_gid=LQjMqcPWcRh6VRN23DjX2Q&oh=00_AfKatdQmzF6ErflFQ-omQ3UuKdPUQzZVN0UNHVXcR76SOw&oe=682C6464" alt="Muhammed Fahim Profile" class="profile-img">
+            </a>
+            <h1>Muhammed Fahim</h1>
+            <div id="typed-text"></div>
+        </div>
+    </header>
+    <main class="container">
+        <section class="personal-info">
+            <h2>Contact Information</h2>
+            <ul>
+                <li><strong>Name:</strong> Muhammed Fahim</li>
+                <li><strong>Address:</strong> Bogura, Bangladesh</li>
+                <li><strong>Email:</strong> muhammedfahim888111@gmail.com</li>
+            </ul>
+        </section>
+        <section class="skills" id="skills">
+            <h2>Technical Skills</h2>
+            <ul>
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript (ES6+)</li>
+                <li>Python (Fundamentals)</li>
+                <li>Responsive Web Development</li>
+            </ul>
+        </section>
+        <section class="projects" id="projects">
+            <h2>Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <img src="https://scontent.fzyl2-2.fna.fbcdn.net/v/t39.30808-6/498178180_669211825901904_2590299328269811722_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFSgo5o_5ln7U9kvFFnJga6wo6stwr4__TCjqy3Cvj_9NYLyCVyQ8cGMb0v1vVS5xEZkBmtR2xz2r4g164ZQsvM&_nc_ohc=fz1GmK5wgB0Q7kNvwE1GQh1&_nc_oc=Adm2GjqL3tYql0UonGYORNsKR0LtxvLyLhivD9qdo9d3yipXuhgtJtIOdDaj4bdsReg&_nc_zt=23&_nc_ht=scontent.fzyl2-2.fna&_nc_gid=Dou861nB0EkuuwuxjTWpPA&oh=00_AfIyjEa-18fna3hMCUTLTolrwYGnI2lt2Z6MuQsS5KehjQ&oe=682F3AA7" alt="Portfolio Website">
+                    <div class="project-info">
+                        <h3>Portfolio Website</h3>
+                        <p>A personal portfolio showcasing my web development skills with responsive design and modern animations.</p>
+                        <a href="Fahim8 Portfolio.html" target="_main" aria-label="View Portfolio Website">View Project</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://m.media-amazon.com/images/I/71h15GsHkvL._SX3000_.jpg" alt="E-Commerce Page">
+                    <div class="project-info">
+                        <h3>E-Commerce Page</h3>
+                        <p>A product showcase page with interactive features and a clean, user-friendly interface.</p>
+                        <a href="fahimproduct.html" target_main="View E-Commerce Page">View Project</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://scontent.fzyl2-2.fna.fbcdn.net/v/t39.30808-6/498332154_669081549248265_1589585275898834254_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEFxpP5KgTBCqey20KiThjFYeGr2rVgovxh4avatWCi_MC64D9pPehjx6s2jwzePEmwmnwtn38a8yCdC4m10WcU&_nc_ohc=__rsDFzOmJ0Q7kNvwEKN5h9&_nc_oc=Adl_n3UTUlrAYZ8RMZPP2Cv9fLJLCgwRJCztMme4-3fDoSonvw_BOjmhL5_Bfl9QNSU&_nc_zt=23&_nc_ht=scontent.fzyl2-2.fna&_nc_gid=3t8jzgXIPHclKllZbLcaCw&oh=00_AfJzyLFnSksYkMbx7XdomjQADCPADmARpYKDdK262FUpxg&oe=682F01EB" alt="Login System">
+                    <div class="project-info">
+                        <h3>Login System</h3>
+                        <p>A secure login form with validation, accessibility, and a modern gradient design.</p>
+                        <a href="fahim8loin.html" target="_main" aria-label="View Login System">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="about" id="about">
+            <h2>About Me</h2>
+            <p>I am Muhammed Fahim, a dedicated web developer and aspiring software engineer from Bogura, Bangladesh, with a passion for crafting innovative digital solutions. My journey in technology began with a fascination for how websites and software function, which has evolved into a relentless pursuit of excellence in coding.</p>
+            <p>Coding is my creative outlet, allowing me to solve complex problems and build user-centric applications. I specialize in HTML5, CSS3, and JavaScript, with a growing proficiency in Python, and I thrive on transforming ideas into reality through hands-on projects and continuous learning via online resources.</p>
+            <p>My ambition is to become a leading web developer, delivering cutting-edge technology that enhances user experiences and drives impact. I approach every challenge as an opportunity to grow, leveraging my skills to create responsive, accessible, and visually stunning web applications.</p>
+            <p>With unwavering determination and a commitment to innovation, I am Muhammed Fahim, ready to shape the future of technology one line of code at a time.</p>
+        </section>
+        <section class="contact" id="contact">
+            <button id="open-modal" aria-label="Open Contact Form">Contact Me</button>
+            <a href="/assets/Muhammed_Fahim_Resume.pdf" download aria-label="Download Muhammed Fahim's Resume">Download Resume</a>
+        </section>
+    </main>
+    <div class="modal" id="contact-modal">
+        <div class="modal-content">
+            <span class="close" aria-label="Close Contact Form">×</span>
+            <h2>Get in Touch</h2>
+            <form action="https://formspree.io/f/muhammedfahim888111@gmail.com" method="POST">
+                <input type="text" name="name" placeholder="Your Name" required aria-label="Name">
+                <input type="email" name="email" placeholder="Your Email" required aria-label="Email">
+                <textarea name="message" placeholder="Your Message" rows="5" required aria-label="Message"></textarea>
+                <button type="submit" aria-label="Send Message">Send Message</button>
+            </form>
+        </div>
+    </div>
+    <a href="#home" class="back-to-top" aria-label="Back to Top">↑</a>
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61575928630091" target="_blank" aria-label="Facebook Profile">Facebook</a>
+                <a href="https://mail.google.com/mail/u/0/#sent" aria-label="Email Muhammed Fahim">Email</a>
+            </div>
+            <p>© 2025 Muhammed Fahim. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script>
+        // Typed.js for dynamic tagline
+        document.addEventListener('DOMContentLoaded', () => {
+            new Typed('#typed-text', {
+                strings: ['Web Developer', 'Software Engineer', 'Problem Solver', 'Tech Enthusiast'],
+                typeSpeed: 50,
+                backSpeed: 30,
+                backDelay: 2000,
+                loop: true
+            });
+
+            // GSAP animations
+            gsap.from('header .header-content', { opacity: 0, y: 50, duration: 1, ease: 'power3.out' });
+            gsap.from('nav', { y: -100, duration: 0.8, ease: 'power3.out' });
+            gsap.utils.toArray('section').forEach(section => {
+                gsap.from(section, {
+                    opacity: 0,
+                    y: 50,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('nav');
+                nav.classList.toggle('scrolled', window.scrollY > 50);
+                document.querySelector('.back-to-top').style.display = window.scrollY > 300 ? 'block' : 'none';
+            });
+
+            // Scrollspy
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav ul li a');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    if (window.scrollY >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').slice(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Hamburger menu
+            const hamburger = document.querySelector('.hamburger');
+            const navUl = document.querySelector('nav ul');
+            hamburger.addEventListener('click', () => {
+                navUl.classList.toggle('active');
+                hamburger.textContent = navUl.classList.contains('active') ? '×' : '☰';
+            });
+
+            // Modal functionality
+            const modal = document.getElementById('contact-modal');
+            const openModal = document.getElementById('open-modal');
+            const closeModal = document.querySelector('.close');
+            openModal.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                gsap.from('.modal-content', { scale: 0.8, opacity: 0, duration: 0.5, ease: 'back.out' });
+            });
+            closeModal.addEventListener('click', () => {
+                gsap.to('.modal-content', {
+                    scale: 0.8,
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: 'back.in',
+                    onComplete: () => { modal.style.display = 'none'; }
+                });
+            });
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    gsap.to('.modal-content', {
+                        scale: 0.8,
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: 'back.in',
+                        onComplete: () => { modal.style.display = 'none'; }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

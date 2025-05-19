@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore our premium collection of smartwatches, smartphones, headphones, laptops, tablets, and more.">
+    <meta name="keywords" content="electronics, gadgets, smartwatch, smartphone, headphones, laptop, tablet, earbuds, webcam, speaker">
+    <meta name="author" content="My Product Showcase">
+    <title>My Product Showcase</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/?size=100&id=53387&format=png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar {
+            transition: background-color 0.3s ease;
+        }
+        .navbar.scrolled {
+            background-color: rgba(17, 24, 39, 0.95);
+        }
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+        }
+        .dark .product-card {
+            background-color: #1f2937;
+            color: #e5e7eb;
+        }
+        .dark .product-card h4 {
+            color: #34d399;
+        }
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #ef4444;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .theme-toggle {
+            cursor: pointer;
+        }
+        .buy-button {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border-radius: 8px;
+        }
+        .buy-button:hover {
+            transform: scale(1.05);
+        }
+ Gabriel Torres
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            background-color: white;
+            padding: 32px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .dark .modal-content {
+            background-color: #1f2937;
+            color: #e5e7eb;
+        }
+        .modal-content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+        .dark .modal-content input {
+            background-color: #374151;
+            border-color: #4b5563;
+            color: #e5e7eb;
+        }
+        .modal-content button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .modal-content button:hover {
+            background-color: #2563eb;
+        }
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+        .tab.active {
+            border-bottom: 2px solid #3b82f6;
+            font-weight: 500;
+        }
+        .close-modal {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        .dark .close-modal {
+            color: #9ca3af;
+        }
+        .nav-button {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border-radius: 8px;
+            font-family: 'Roboto', sans-serif;
+        }
+        .nav-button:hover {
+            transform: scale(1.05);
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 2px 0;
+            transition: all 0.3s ease;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                width: 100%;
+                background-color: #111827;
+                padding: 16px;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+        .social-icon {
+            transition: transform 0.2s ease;
+        }
+        .social-icon:hover {
+            transform: scale(1.2);
+        }
+        .cycle-button {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .cycle-button:hover {
+            transform: scale(1.1);
+        }
+        .cycle-button:focus {
+            outline: none;
+            ring: 2px solid #ffffff;
+        }
+        @media (max-width: 768px) {
+            .cycle-button {
+                padding: 2px;
+            }
+            .cycle-button svg {
+                width: 5rem;
+                height: 5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Navigation Bar -->
+    <nav class="navbar bg-gray-800 dark:bg-gray-800 text-white p-4 sticky top-0 z-50 shadow-md" role="navigation" aria-label="Main navigation">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold" aria-label="Home">My Product Showcase</a>
+            <div class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="nav-links flex items-center space-x-4">
+                <a href="#products" class="hover:text-blue-300 transition">Products</a>
+                <a href="#contact" class="hover:text-blue-300 transition">Contact</a>
+                <input type="text" id="searchInput" placeholder="Search products..." class="p-2 rounded-lg text-gray-800 dark:text-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Search products">
+                <button class="nav-button bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" onclick="openModal('login')" aria-label="Log In">Log In</button>
+                <button class="nav-button bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700" onclick="openModal('signup')" aria-label="Sign Up">Sign Up</button>
+                <span class="theme-toggle text-yellow-300" onclick="toggleTheme()" role="button" aria-label="Toggle theme">☀️</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header id="header" class="bg-gradient-to-r from-gray-800 to-blue-900 text-white text-center py-24" role="banner" style="background-size: cover; background-position: center;">
+        <div class="container mx-auto px-4 relative">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 tracking-tight"></h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto text-gray-200"></p>
+            <a href="#products" class="mt-8 inline-block bg-blue-600 text-white font-semibold py-3 px-10 rounded-lg hover:bg-blue-700 transition shadow-lg" aria-label="Shop now">Shop Now</a>
+            <button id="cycle-bg" class="cycle-button absolute bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition shadow-lg" aria-label="Cycle background image">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5m6 0h5v-5m-5 5v5h-5m-6 0h-5v-5"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Products Section -->
+    <section id="products" class="py-20" aria-labelledby="products-heading">
+        <div class="container mx-auto px-4">
+            <h2 id="products-heading" class="text-4xl font-bold text-center mb-12 text-gray-800 dark:text-white">Our Products</h2>
+            <div id="spinner" class="spinner"></div>
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl shadow-lg" data-name="Smartwatch">
+                    <span class="badge">New</span>
+                    <img src="https://www.leafstudios.in/cdn/shop/files/1_1099cd20-7237-4bdf-a180-b7126de5ef3d_grande.png?v=1722230645" alt="Smartwatch" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Smartwatch</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Stay connected and track your fitness goals with this stylish smartwatch.</p>
+                        <h4 class="text-lg font-medium text-green-500 dark:text-green-400 mb-4">Price: $150</h4>
+                        <a href="#" class="buy-button inline-block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" aria-label="Buy Smartwatch">Buy Now</a>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl shadow-lg" data-name="Smartphone">
+                    <img src="https://www.godigit.com/content/dam/godigit/directportal/en/xiaomi-redmi-note-13-pro-plus.png" alt="Smartphone" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Smartphone</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">High-performance smartphone with a stunning display and powerful camera.</p>
+                        <h4 class="text-lg font-medium text-green-500 dark:text-green-400 mb-4">Price: $350</h4>
+                        <a href="#" class="buy-button inline-block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" aria-label="Buy Smartphone">Buy Now</a>
+                    </div>
+                </div>
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl shadow-lg" data-name="Jeans">
+                    <span class="badge">Sale</span>
+                    <img src="https://images-na.ssl-images-amazon.com/images/G/01/AMAZON_FASHION/2022/SITE_FLIPS/SPR_22/GW/DQC/DQC_APR_TBYB_W_BOTTOMS_2x._SY232_CB624172947_.jpg" alt="Jeans" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Jeans</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Long-lasting glossy color – Zinish Paint is now even better!.</p>
+                        <h4 class="text-lg font-medium text-green-500 dark:text-green-400 mb-4">Price: $0</h4>
+                        <a href="#" class="buy-button inline-block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" aria-label="Buy Jeans">Buy Now</a>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl shadow-lg" data-name="Headphones">
+                    <span class="badge">Sale</span>
+                    <img src="https://www.bigw.com.au/medias/sys_master/images/images/h21/hc8/52275458736158.jpg" alt="Headphones" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Headphones</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Wireless headphones with noise cancellation and all-day comfort.</p>
+                        <h4 class="text-lg font-medium text-green-500 dark:text-green-400 mb-4">Price: $140</h4>
+                        <a href="#" class="buy-button inline-block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" aria-label="Buy Headphones">Buy Now</a>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl shadow-lg" data-name="Laptop">
+                    <img src="https://cdn.thewirecutter.com/wp-content/media/2024/07/laptopstopicpage-2048px-3685-2x1-1.jpg?width=2048&quality=75&crop=2:1&auto=webp" alt="Laptop" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Laptop</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Lightweight laptop with fast processor and sleek design.</p>
+                        <h4 class="text-lg font-medium text-green-500 dark:text-green-400 mb-4">Price: $1200</h4>
+                        <a href="#" class="buy-button inline-block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" aria-label="Buy Laptop">Buy Now</a>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl shadow-lg" data-name="Tablet">
+                    <img src="https://www.excelestore.com.bd/public/uploads/all/QsCHOgfLscFlnAsUut9OGMrtTbd7dZfj0BPqyh9U.jpg" alt="Tablet" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Tablet</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Versatile tablet for work and play with laptop-like power.</p>
+                        <h4 class="text-lg font-medium text-green-500 dark:text-green-400 mb-4">Price: $300</h4>
+                        <a href="#" class="buy-button inline-block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" aria-label="Buy Tablet">Buy Now</a>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl shadow-lg" data-name="Wireless Earbuds">
+                    <span class="badge">New</span>
+                    <img src="https://gearsforears.com/cdn/shop/files/SoundPEATS-Engine4-True-Wireless-Earbuds-2_600x.jpg?v=1708549940" alt="Wireless Earbuds" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Wireless Earbuds</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Compact earbuds with crystal-clear audio and long battery life.</p>
+                        <h4 class="text-lg font-medium text-green-500 dark:text-green-400 mb-4">Price: $59.99</h4>
+                        <a href="#" class="buy-button inline-block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" aria-label="Buy Wireless Earbuds">Buy Now</a>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl shadow-lg" data-name="Smartwatch Pro">
+                    <img src="https://extremegadgets.com.bd/wp-content/uploads/2024/07/1000031766.jpg" alt="Smartwatch Pro" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Smartwatch Pro</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Advanced smartwatch with heart rate tracking and notifications.</p>
+                        <h4 class="text-lg font-medium text-green-500 dark:text-green-400 mb-4">Price: $199.99</h4>
+                        <a href="#" class="buy-button inline-block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" aria-label="Buy Smartwatch Pro">Buy Now</a>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl shadow-lg" data-name="4K Webcam">
+                    <img src="https://m.media-amazon.com/images/I/71zXgetJmlL._AC_SL1500_.jpg" alt="4K Webcam" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">4K Webcam</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">4K webcam for streaming and video calls with stunning clarity.</p>
+                        <h4 class="text-lg font-medium text-green-500 dark:text-green-400 mb-4">Price: $89.99</h4>
+                        <a href="#" class="buy-button inline-block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" aria-label="Buy 4K Webcam">Buy Now</a>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl shadow-lg" data-name="Bluetooth Speaker">
+                    <span class="badge">Sale</span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK9JBsDJYl3f9rKYgflQG0TBLX5_UMYYgZWg&s" alt="Bluetooth Speaker" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Bluetooth Speaker</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Portable speaker with powerful sound for any occasion.</p>
+                        <h4 class="text-lg font-medium text-green-500 dark:text-green-400 mb-4">Price: $129.99</h4>
+                        <a href="#" class="buy-button inline-block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" aria-label="Buy Bluetooth Speaker">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="bg-gray-100 dark:bg-gray-800 py-20" aria-labelledby="contact-heading">
+        <div class="container mx-auto px-4 text-center">
+            <h2 id="contact-heading" class="text-4xl font-bold mb-8 text-gray-800 dark:text-white">Get in Touch</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">Have questions or need support? Reach out, and our team will respond promptly.</p>
+            <a href="https://mail.google.com/mail/u/0/#sent" target="_blank" class="inline-block bg-blue-600 text-white py-3 px-10 rounded-lg hover:bg-blue-700 transition shadow-lg" aria-label="Contact us via email">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 dark:bg-gray-900 text-white py-12" role="contentinfo">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">My Product Showcase</h3>
+                    <p class="text-gray-400">Discover the best in electronics with our premium collection.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#products" class="hover:text-blue-300 transition">Products</a></li>
+                        <li><a href="#contact" class="hover:text-blue-300 transition">Contact</a></li>
+                        <li><a href="#" class="hover:text-blue-300 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-blue-300 transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe for updates and exclusive offers.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="p-2 rounded-l-lg text-gray-800 dark:text-gray-200 dark:bg-gray-700 focus:outline-none flex-grow" aria-label="Newsletter email">
+                        <button class="bg-blue-600 text-white p-2 rounded-r-lg hover:bg-blue-700 transition" aria-label="Subscribe">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 flex justify-center space-x-6">
+                <a href="#" class="social-icon text-gray-400 hover:text-blue-300" aria-label="Facebook"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+                <a href="#" class="social-icon text-gray-400 hover:text-blue-300" aria-label="Twitter"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
+                <a href="#" class="social-icon text-gray-400 hover:text-blue-300" aria-label="Instagram"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.982-6.98.059-1.281.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.948-.196-4.354-2.617-6.782-6.982-6.982-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+            </div>
+            <p class="mt-8 text-gray-400 text-center">© 2025 My Product Showcase. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Login/Signup Modal -->
+    <div id="authModal" class="modal" role="dialog" aria-labelledby="modal-title">
+        <div class="modal-content relative">
+            <span class="close-modal" onclick="closeModal()" role="button" aria-label="Close modal">×</span>
+            <div class="flex mb-6">
+                <div class="tab active" onclick="switchTab('login')" aria-label="Log In Tab">Log In</div>
+                <div class="tab" onclick="switchTab('signup')" aria-label="Sign Up Tab">Sign Up</div>
+            </div>
+            <div id="login-form">
+                <h2 id="modal-title" class="text-gray-800 dark:text-white">Log In</h2>
+                <input type="email" placeholder="Email" aria-label="Email" required>
+                <input type="password" placeholder="Password" aria-label="Password" required>
+                <button onclick="submitAuth('login')" aria-label="Log In">Log In</button>
+            </div>
+            <div id="signup-form" class="hidden">
+                <h2 id="modal-title" class="text-gray-800 dark:text-white">Sign Up</h2>
+                <input type="text" placeholder="Full Name" aria-label="Full Name" required>
+                <input type="email" placeholder="Email" aria-label="Email" required>
+                <input type="password" placeholder="Password" aria-label="Password" required>
+                <button onclick="submitAuth('signup')" aria-label="Sign Up">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const toggle = document.querySelector('.theme-toggle');
+            toggle.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+        }
+
+        // Product Search
+        const searchInput = document.getElementById('searchInput');
+        const productsGrid = document.getElementById('products-grid');
+        const spinner = document.getElementById('spinner');
+        const productCards = document.querySelectorAll('.product-card');
+
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            spinner.style.display = 'block';
+            productsGrid.style.opacity = '0.5';
+
+            setTimeout(() => {
+                productCards.forEach(card => {
+                    const name = card.getAttribute('data-name').toLowerCase();
+                    card.style.display = name.includes(query) ? 'block' : 'none';
+                });
+                spinner.style.display = 'none';
+                productsGrid.style.opacity = '1';
+            }, 500);
+        });
+
+        // Keyboard Accessibility for Theme Toggle
+        document.querySelector('.theme-toggle').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleTheme();
+            }
+        });
+
+        // Modal Functions
+        function openModal(type) {
+            const modal = document.getElementById('authModal');
+            switchTab(type);
+            modal.style.display = 'flex';
+            modal.querySelector('input').focus();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('authModal');
+            modal.style.display = 'none';
+        }
+
+        function switchTab(type) {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            if (type === 'login') {
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                tabs[0].classList.add('active');
+            } else {
+                loginForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+                tabs[1].classList.add('active');
+            }
+        }
+
+        function submitAuth(type) {
+            // Placeholder for authentication logic
+            alert(`${type.charAt(0).toUpperCase() + type.slice(1)} submitted (placeholder)`);
+            closeModal();
+        }
+
+        // Close Modal on Outside Click
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('authModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Keyboard Accessibility for Modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Hamburger Menu Toggle
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 0);
+        });
+
+        // Background Image Cycling
+        const backgroundImages = [
+            'https://m.media-amazon.com/images/I/71h15GsHkvL._SX3000_.jpg',
+            'https://m.media-amazon.com/images/I/71Ie3JXGfVL._SX3000_.jpg',
+            'https://m.media-amazon.com/images/I/61zAjw4bqPL._SX3000_.jpg',
+            'https://m.media-amazon.com/images/I/619geyiQI5L._SX3000_.jpg'
+        ];
+        let currentBgIndex = 0;
+
+        const header = document.getElementById('header');
+        const cycleButton = document.getElementById('cycle-bg');
+
+        // Set initial background image
+        header.style.backgroundImage = `url(${backgroundImages[currentBgIndex]})`;
+
+        cycleButton.addEventListener('click', () => {
+            currentBgIndex = (currentBgIndex + 1) % backgroundImages.length;
+            header.style.backgroundImage = `url(${backgroundImages[currentBgIndex]})`;
+        });
+
+        // Keyboard accessibility for cycle button
+        cycleButton.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                currentBgIndex = (currentBgIndex + 1) % backgroundImages.length;
+                header.style.backgroundImage = `url(${backgroundImages[currentBgIndex]})`;
+            }
+        });
+    </script>
+</body>
+</html>
